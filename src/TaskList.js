@@ -29,9 +29,26 @@ function TaskList() {
     ));
   };
 
+  // Function to delete a task
+  const deleteTask = (taskId) => {
+    setTasks(tasks.filter(task => task.id !== taskId));
+  };
+
+  // Calculate task statistics
+  const totalTasks = tasks.length;
+  const completedTasks = tasks.filter(task => task.completed).length;
+  const remainingTasks = totalTasks - completedTasks;
+
   return (
     <div className="task-list">
       <h1>My Tasks</h1>
+      
+      {/* Task Statistics */}
+      <div className="task-stats">
+        <p>Total Tasks: {totalTasks}</p>
+        <p>Completed: {completedTasks}</p>
+        <p>Remaining: {remainingTasks}</p>
+      </div>
       
       {/* Add Task Form */}
       <form onSubmit={addTask}>
@@ -59,6 +76,12 @@ function TaskList() {
             }}>
               {task.text}
             </span>
+            <button 
+              className="delete-btn"
+              onClick={() => deleteTask(task.id)}
+            >
+              ×
+            </button>
           </li>
         ))}
       </ul>
